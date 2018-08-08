@@ -36,19 +36,18 @@ public class ILController {
     @GetMapping("/Login")
     public String LogInUser (HttpServletRequest request){
     HttpSession session = request.getSession(true);
-    if(session.getAttribute("LoggedIn") !=null}
-    return
-}
-            return "allUsers";
-        else
-            return "redirect:form";
-
-
+    if(session.getAttribute("LoggedIn") !=null)
+    return "allUsers";
+    else
+        return "redirect: Login";
     }
-
-
-
-
-
-
+    @PostMapping("/Login")
+    public String getUserInput(@RequestParam (name="email", required=true)String email, @RequestParam(name="password")String password,
+                               HttpServletRequest request){
+        if(ilrepository.verify(email,password))
+            return "redirect: Index";
+            else
+                return "Login";
+        }
+}
 
