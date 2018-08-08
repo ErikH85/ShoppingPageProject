@@ -7,39 +7,55 @@
 </head>
 <body>
 <div class="wrapper">
-    <form class="adress">
+
+    <h1>Kvitto: </h1>
+
+    <ul>
+        <li>Item1</li>
+        <li>Item2</li>
+        <li>Item3</li>
+    </ul>
+
+
+
+
+    <h1>Välj leveransadress och betalalternativ</h1>
+
+    <form class="adressPayment" method="post">
         <div class="fieldsetBorder1">
         <fieldset>
 
             <div class="address1">
-                <input class="" type="radio" name="radio">
-                <span class="">adress 1</span>
+                <input class="" type="radio" name="addressRadio" value="1">
+                <span class="">Leveransadress 1</span>
             </div>
 
             <div class="address2">
-                <input class="" type="radio" name="radio">
-                <span class="">adress 2</span>
+                <input class="" type="radio" name="addressRadio" value="2">
+                <span class="">Leveransadress 2</span>
             </div>
 
         </fieldset>
         </div>
-    </form>
-    <form class="payment">
+
+
+
         <div class="fieldsetBorder2">
             <fieldset>
 
                 <div class="payment1">
-                    <input class="" type="radio" name="radio">
+                    <input class="" type="radio" name="paymentRadio" value="1">
                     <span class="">Payment option 1</span>
                 </div>
 
                 <div class="payment2">
-                    <input class="" type="radio" name="radio">
+                    <input class="" type="radio" name="paymentRadio" value="2">
                     <span class="">Payment option 2</span>
                 </div>
 
             </fieldset>
         </div>
+        <input type="submit" class="submitBtn">
     </form>
 </div>
 </body>
