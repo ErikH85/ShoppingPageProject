@@ -9,6 +9,7 @@ package com.gavlehudik.shopping;
 
         import javax.servlet.http.HttpServletRequest;
         import javax.servlet.http.HttpSession;
+        import java.sql.SQLException;
         import java.util.ArrayList;
         import java.util.List;
 
@@ -43,8 +44,8 @@ public class ILController {
     }
     @PostMapping("/Login")
     public String getUserInput(@RequestParam (name="email", required=true)String email, @RequestParam(name="password")String password,
-                               HttpServletRequest request){
-        if(ilrepository.verify(email,password))
+                               HttpServletRequest request) throws SQLException {
+        if(ilRepository.verifyLogin(email,password))
             return "redirect: Index";
             else
                 return "Login";

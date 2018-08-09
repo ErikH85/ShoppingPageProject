@@ -18,28 +18,28 @@ public class ILRepository {
 @Autowired
     public DataSource dataSource;
 
-public Boolean veryfyLogin(String email, String password) {
+public Boolean verifyLogin(String email, String password) throws SQLException {
     List<User> users = new ArrayList <>();
 
-    try (
-            Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement("SELECT [email] FROM [users] WHERE [email] = ? AND " +
-                    "[password] = ?");
-            ps.setString(1, email);
-            ps.setString(1, password);
-            ResultSet resultSet = ps.executeQuery();
+    try {
+        Connection conn = dataSource.getConnection();
+        PreparedStatement ps = conn.prepareStatement("SELECT [email] FROM [users] WHERE [email] = ? AND " +
+                "[password] = ?");
+        ps.setString(1, email);
+        ps.setString(2, password);
+        ResultSet resultSet = ps.executeQuery();
 
 
-          while(resultSet.next()){
-        User user = new User()
+        while (resultSet.next()) {
+            User user = new User();
+
+        }
+
+    }  catch (Exception e) {
 
     }
-
-            )
-
+    return true;
 }
-
-
 }
 
 /*
