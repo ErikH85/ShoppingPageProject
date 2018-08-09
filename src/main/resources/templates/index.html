@@ -10,6 +10,7 @@
 <body>
 <button onclick="document.getElementById('registerDiv').style.display='block'" style="width:auto;">Sign Up</button>
 <button onclick="document.getElementById('loginDiv').style.display='block'" style="width:auto;">Sign In</button>
+<button onclick="document.getElementById('cartDiv').style.display='block'" style="width:auto;">Cart</button>
 
 <ul>
     <li th:each="product:${Products}"th:text="${product.productName} + ': ' + ${product.price}"></li>
@@ -323,6 +324,22 @@
             <div class="clearfix">
                 <button type="button" onclick="document.getElementById('loginDiv').style.display='none'" class="cancelbtn">Cancel</button>
                 <button type="submit" class="signupbtn">Sign In</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="cartDiv" class="modal">
+    <span onclick="document.getElementById('loginDiv').style.display='none'" class="close" title="Close Modal">&times;</span>
+    <form class="modal-content">
+        <div class="container">
+            <h1>Shopping Cart</h1>
+            <p>Your items</p>
+
+
+            <div class="clearfix">
+                <button type="button" onclick="document.getElementById('cartDiv').style.display='none'" class="cancelbtn">Cancel</button>
+                <button type="submit" class="signupbtn">Buy</button>
             </div>
         </div>
     </form>
