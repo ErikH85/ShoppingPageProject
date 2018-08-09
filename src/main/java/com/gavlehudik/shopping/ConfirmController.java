@@ -31,13 +31,18 @@ public class ConfirmController {
     public ModelAndView getAddress(HttpServletRequest request){
 
         List<String> addresses;
+        List<Order>  products;
+
         //HttpSession session = request.getSession(true);
         //User user = (User) session.getAttribute("user");
         //addresses = confirmRepository.getAddress(user.getEmail());
 
-        addresses = confirmRepository.getAddress("christoffergunnarsson@hotmail.com");
+        products = confirmRepository.getReceipt("1");
 
-        return new ModelAndView("confirm").addObject("allAddresses", addresses);
+        addresses = confirmRepository.getAddress("1");
+
+        return new ModelAndView("confirm").addObject("allAddresses", addresses).addObject
+                ("allProducts", products);
     }
 
     @PostMapping("/confirm")
