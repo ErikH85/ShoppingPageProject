@@ -44,3 +44,10 @@ body {
     cursor: pointer;
     border-radius: 8px;
 }
+ul{
+    margin-top: 2%;
+    margin-left:20%;
+}
+li{
+    list-style-type:none
+}
