@@ -1,8 +1,7 @@
 package com.gavlehudik.shopping;
 
 public class Order {
-    //Fixa en order-klass, för att visa upp ett kvitto i BS
-    //den här utvecklas i develop som sedan ska mergas ihop med BS
+    
     private int orderID;
     private String orderName;
     private int price;
