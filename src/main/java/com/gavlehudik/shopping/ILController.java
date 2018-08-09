@@ -24,23 +24,21 @@ public class ILController {
     private String getIndex(){
         return "Index";
     }
-    @GetMapping("/Login")
-    private String getLogin(){
-        return "Login";
 
-    }
     @GetMapping("/SH")
     private String getSH() {
         return "SH";
     }
 
-    @GetMapping("/Login")
+    @GetMapping("/LoginTest")
     public String LogInUser (HttpServletRequest request){
         HttpSession session = request.getSession(true);
-        if(session.getAttribute("LoggedIn") !=null)
-            return "allUsers";
-        else
-            return "redirect: Login";
+        if(session.getAttribute("LoggedIn") !=null) {
+            System.out.println("inloggad");
+        } else {
+            System.out.println("utloggad");
+        }
+        return "redirect:/";
     }
 
     @PostMapping("/Login")
@@ -49,10 +47,8 @@ public class ILController {
         if(ilRepository.verifyLogin(email,password)) {
             HttpSession session = request.getSession(true);
             session.setAttribute("LoggedIn", true);
-            return "redirect: Index";
-        } else {
-            return "Login";
         }
+        return "redirect:/";
     }
 
     @GetMapping("/Logout")

@@ -23,15 +23,13 @@ public class ILRepository {
 
         try {
             Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement("SELECT [email] FROM [users] WHERE [email] = ? AND " +
-                    "[password] = ?");
+            PreparedStatement ps = conn.prepareStatement("SELECT [userID], [firstname], [lastname], [address], [email], [password] FROM [users] WHERE [email] = ? AND [password] = ?");
             ps.setString(1, email);
             ps.setString(2, password);
             ResultSet resultSet = ps.executeQuery();
 
-
             while (resultSet.next()) {
-                User user = new User(resultSet.getInt("id"), resultSet.getString("firstname"),
+                User user = new User(resultSet.getInt("userID"), resultSet.getString("firstname"),
                         resultSet.getString("lastname"), resultSet.getString("address"),
                         resultSet.getString("email"), resultSet.getString("password"));
 
