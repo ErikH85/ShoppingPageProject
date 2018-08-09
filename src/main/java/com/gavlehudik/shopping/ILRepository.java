@@ -15,51 +15,38 @@ import java.util.List;
 @Component
 public class ILRepository {
 
-@Autowired
+    @Autowired
     public DataSource dataSource;
 
-public Boolean verifyLogin(String email, String password) throws SQLException {
-    List<User> users = new ArrayList <>();
+    public Boolean verifyLogin(String email, String password) throws SQLException {
+        List<User> users = new ArrayList <>();
 
-    try {
-        Connection conn = dataSource.getConnection();
-        PreparedStatement ps = conn.prepareStatement("SELECT [email] FROM [users] WHERE [email] = ? AND " +
-                "[password] = ?");
-        ps.setString(1, email);
-        ps.setString(2, password);
-        ResultSet resultSet = ps.executeQuery();
+        try {
+            Connection conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement("SELECT [email] FROM [users] WHERE [email] = ? AND " +
+                    "[password] = ?");
+            ps.setString(1, email);
+            ps.setString(2, password);
+            ResultSet resultSet = ps.executeQuery();
 
 
-        while (resultSet.next()) {
-            User user = new User();
-
-        }
-
-    }  catch (Exception e) {
-
-    }
-    return true;
-}
-}
-
-/*
-            while(resultSet.next()) {
-                User user = new User(resultSet.getInt("id"), resultSet.getString("name"),
-                        resultSet.getString("email"), resultSet.getString("username"),
-                        resultSet.getString("password"));
+            while (resultSet.next()) {
+                User user = new User(resultSet.getInt("id"), resultSet.getString("firstname"),
+                        resultSet.getString("lastname"), resultSet.getString("address"),
+                        resultSet.getString("email"), resultSet.getString("password"));
 
                 users.add(user);
-            }
 
-            if(users.size() > 0) {
+            }
+            if (users.size() > 0) {
                 return true;
             }
 
-        } catch (SQLException e) {
+        }catch (SQLException e) {
             e.printStackTrace();
-        }
 
+        }
         return false;
     }
 }
- */
+
