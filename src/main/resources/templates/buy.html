@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Buy</title>
+    <link th:href="@{buyStyle.css}" rel="stylesheet">
+</head>
+<div class="wrapper">
+
+    <h1>Välj leveransadress och betalalternativ</h1>
+
+    <form class="adressPayment" method="post">
+        <div class="fieldsetBorder1">
+            <fieldset>
+
+                <ul>
+                    <li th:each="address, p : ${allAddresses}">
+                        <input type="radio" name="addressRadio" th:value="${p.index}" th:id="address + ${p.index}" th:checked="${p.index == 0}?checked:false"><label th:for="address + ${p.index}" th:text="${address}"></label>
+                    </li>
+                </ul>
+
+            </fieldset>
+        </div>
+
+
+
+        <div class="fieldsetBorder2">
+            <fieldset>
+
+                <div class="payment1">
+                    <input class="" type="radio" name="paymentRadio" value="0">
+                    <span class="">Visa</span>
+                </div>
+
+                <div class="payment2">
+                    <input class="" type="radio" name="paymentRadio" value="1">
+                    <span class="">MasterCard</span>
+                </div>
+
+                <div class="payment3">
+                    <input class="" type="radio" name="paymentRadio" value="2">
+                    <span class="">Klarna</span>
+                </div>
+
+            </fieldset>
+        </div>
+        <input type="submit" class="submitBtn">
+    </form>
+</div>
+</body>
+</html>
