@@ -40,10 +40,7 @@ public class ConfirmRepository {
             while(rs.next()){
                 Order order = new Order(rs.getNString("productName"),
                         rs.getInt("price"),rs.getInt("quantity"));
-
                 products.add(order);
-
-                System.out.println(order.getOrderName() + order.getPrice());
             }
 
         } catch (SQLException e) {
@@ -53,7 +50,6 @@ public class ConfirmRepository {
         return products;
 
     }
-
 
     public List<String> getAddress(String userID){
 
