@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
             if (rfRepository.addUser(email, password, firstname, lastname,
                     address, zipcode, city, country)) {
-                return "account";
+                return "index";
             }
             return "index";
         }
