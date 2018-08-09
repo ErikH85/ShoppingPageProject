@@ -1,0 +1,47 @@
+package com.gavlehudik.shopping;
+
+public class Order {
+    
+    private int orderID;
+    private String orderName;
+    private int price;
+    private int quantity;
+
+    public Order(String orderName, int price, int quantity){
+        this.orderName = orderName;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
+    public int getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(int orderID) {
+        this.orderID = orderID;
+    }
+
+    public String getOrderName() {
+        return orderName;
+    }
+
+    public void setOrderName(String orderName) {
+        this.orderName = orderName;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+}
