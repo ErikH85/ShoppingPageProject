@@ -51,25 +51,4 @@ public class ConfirmRepository {
 
     }
 
-    public List<String> getAddress(String userID){
-
-        List<String> addresses = new ArrayList<>();
-
-        try {
-            Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement("SELECT addresses FROM Addresses WHERE userID=?");
-            ps.setString(1,userID);
-            ResultSet rs = ps.executeQuery();
-
-            while(rs.next()){
-                addresses.add(rs.getNString("addresses"));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return addresses;
-    }
-
 }

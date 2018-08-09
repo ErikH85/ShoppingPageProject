@@ -8,31 +8,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class ConfirmController {
+public class BuyController {
 
     @Autowired
-    private ConfirmRepository confirmRepository;
+    private BuyRepository buyRepository;
+
+    @GetMapping("/buy")
+    public ModelAndView getAddress(HttpServletRequest request){
+
+        List<String> addresses;
 
 
-    @GetMapping("/confirm")
-    public ModelAndView getOrder(HttpServletRequest request){
+        //HttpSession session = request.getSession(true);
+        //User user = (User) session.getAttribute("user");
+        //addresses = confirmRepository.getAddress(user.getEmail());
 
-        List<Order>  products;
 
-        products = confirmRepository.getReceipt("1");
-        return new ModelAndView("confirm").addObject("allProducts", products);
+
+        addresses = buyRepository.getAddress("1");
+
+        return new ModelAndView("buy").addObject("allAddresses", addresses);
     }
 
-
-
-
-    @PostMapping("/confirm")
+    @PostMapping("/buy")
     public String postForm(@RequestParam String addressRadio,
                            @RequestParam String paymentRadio){
 
@@ -40,11 +41,8 @@ public class ConfirmController {
         String paymentOption = paymentRadio;
         System.out.println(addressOption + " " + paymentOption);
 
-        return "confirm";
+        return "buy";
 
     }
-
-
-
 
 }
