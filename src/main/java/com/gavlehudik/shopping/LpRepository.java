@@ -16,8 +16,8 @@ public class LpRepository {
     @Autowired
     public DataSource dataSource;
 
-    public List<String> getProducts() {
-        List<String> products = new ArrayList<>();
+    public List<Products> getConsoles() {
+        List<Products> products = new ArrayList<>();
 
         try {
             Connection conn = dataSource.getConnection();
@@ -25,7 +25,27 @@ public class LpRepository {
             ResultSet result = ps.executeQuery();
 
             while(result.next()){
-                products.add(result.getString("productname"));
+                Products product = new Products(result.getString("productName"),result.getInt("price"));
+                products.add(product);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
+    public List<Products> getGames() {
+        List<Products> products = new ArrayList<>();
+
+        try {
+            Connection conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement("SELECT productName,price FROM products WHERE category LIKE 'Spel'");
+            ResultSet result = ps.executeQuery();
+
+            while(result.next()){
+                Products product = new Products(result.getString("productName"),result.getInt("price"));
+                products.add(product);
             }
 
 
