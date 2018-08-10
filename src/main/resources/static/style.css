@@ -66,6 +66,10 @@ ul{
     float: right;
 }
 
+#logout {
+    float: right;
+}
+
 /* Style the search box inside the navigation bar */
 .topnav input[type=text] {
     width: 80%;

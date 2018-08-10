@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -31,6 +32,7 @@ public class ILController {
         HttpSession session = request.getSession(true);
         if(session.getAttribute("LoggedIn") !=null) {
             System.out.println("inloggad");
+
         } else {
             System.out.println("utloggad");
         }
@@ -47,11 +49,15 @@ public class ILController {
         return "redirect:/";
     }
 
-    @GetMapping("/logout")
-    public String removeSessionCookie(HttpServletResponse respons, HttpServletRequest request){
+    @PostMapping("/logout")
+    public String removeSessionCookie(HttpServletResponse response,
+                             HttpServletRequest request) {
+        Cookie sessionCookie = new Cookie("JSESSIONID", null);
+        sessionCookie.setMaxAge(0);
+        response.addCookie(sessionCookie);
         HttpSession session = request.getSession(true);
-        session.invalidate ();
-        return "/";
+        session.invalidate();
+        return "index";
     }
 }
 

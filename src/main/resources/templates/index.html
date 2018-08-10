@@ -11,8 +11,18 @@
 
 <div class="topnav" id="myTopnav">
     <a href="/">Home</a>
-    <a id="login" onclick="document.getElementById('loginDiv').style.display='block'" style="width:auto;">Sign In</a>
-    <a id="register" onclick="document.getElementById('registerDiv').style.display='block'">Register</a>
+
+    <span th:if="${LoggedIn}">
+        <form action="/logout" method="post">
+            <a id="logout" style="width:auto;";>Sign Out</a>
+        </form>
+    </span>
+    <span th:unless="${LoggedIn}">
+        <a id="login" onclick="document.getElementById('loginDiv').style.display='block'" style="width:auto;">Sign In</a>
+        <a id="register" onclick="document.getElementById('registerDiv').style.display='block'" style="width:auto;">Register</a>
+    </span>
+
+
     <a id="shoppingcart" onclick="document.getElementById('cartDiv').style.display='block'" style="width:auto;"><i class="fa fa-shopping-cart"></i></a>
     <input type="text" placeholder="Search...">
 </div>
@@ -352,15 +362,19 @@
     </form>
 </div>
 
+<!--Products-->
 <div class="wrapper">
     <div class="products">
         <div class="product-item">
             <h3>Picture</h3>
+            <ul>
+                <li></li>
+            </ul>
         </div>
         <div class="product-item">
             <h3>Name</h3>
             <ul>
-                <li th:each="product:${Products}"th:text="${product.productName}"><button>Click here</button></li>
+                <li th:each="product:${Products}"th:text="${product.productName}"></li>
             </ul>
         </div>
         <div class="product-item">
