@@ -20,7 +20,7 @@
     </span>
 
 
-    <a id="shoppingcart" onclick="document.getElementById('cartDiv').style.display='block'" style="width:auto;"><i class="fa fa-shopping-cart"></i></a>
+    <a th:href="@{getShoppingCart}" method="get" id="shoppingcart"  style="width:auto;"><i class="fa fa-shopping-cart" ></i></a>
     <input type="text" placeholder="Search...">
 </div>
 
@@ -342,13 +342,21 @@
 </div>
 
 <!--Shopping Cart-->
-<div id="cartDiv" class="modal">
+<div id="cartDiv" class="shoppingCartModal" th:if="${shoppingCart}">
     <span onclick="document.getElementById('cartDiv').style.display='none'" class="close" title="Close Modal">&times;</span>
-    <form class="modal-content" action="/buy" method="get">
+    <form class="modal-content" th:action="@{/buy}" method="get">
+
         <div class="container">
             <h1>Shopping Cart</h1>
             <p>Your items</p>
-            
+
+
+
+            <li th:each="shoppingCart : ${shoppingCartInventory}" th:text="${shoppingCart.productName} + ' ' + ${shoppingCart.price}
+              + ' ' + ${shoppingCart.quantity}">
+
+            </li>
+
 
 
             <div class="clearfix">

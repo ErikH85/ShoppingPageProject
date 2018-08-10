@@ -16,7 +16,7 @@ public class SHController {
     private SHRepository shRepository;
 
 
-    @GetMapping("sh-test")
+    @GetMapping("/getShoppingCart")
     public ModelAndView displaySH(HttpServletRequest request){
 
         HttpSession session = request.getSession(true);
@@ -31,10 +31,11 @@ public class SHController {
 
             shoppingCartInventory = shRepository.getShoppingCart(Integer.toString(id));
 
-            return new ModelAndView("sh-test").addObject("shoppingCartInventory", shoppingCartInventory);
+            return new ModelAndView("index").addObject("shoppingCartInventory", shoppingCartInventory)
+                    .addObject("shoppingCart",true);
         }
         else{
-            return new ModelAndView("sh-test");
+            return new ModelAndView("index");
         }
     }
 
