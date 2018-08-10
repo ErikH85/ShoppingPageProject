@@ -54,4 +54,24 @@ public class LpRepository {
         }
         return products;
     }
+
+    public void addProduct(int productID,int userID) {
+        try {
+            Connection conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement("SELECT productName,price FROM products WHERE productID=?");
+            ps.setInt(1, productID);
+            ResultSet product = ps.executeQuery();
+
+            product.next();
+            PreparedStatement ps1 = conn.prepareStatement("INSERT INTO shoppingCart VALUES(?,?,?,?)");
+            ps1.setInt(1, userID);
+            ps1.setString(2, product.getString("productName"));
+            ps1.setInt(3, 1);
+            ps1.setInt(4, product.getInt("price"));
+            ps1.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
