@@ -12,9 +12,7 @@
 <div class="topnav" id="myTopnav">
     <a href="/">Home</a>
     <span th:if="${LoggedIn}">
-        <form action="/logout" method="post">
-            <a id="logout" style="width:auto;";>Sign Out</a>
-        </form>
+        <a id="logout" style="width:auto;"; th:href="@{logout}">Sign Out</a>
     </span>
     <span th:unless="${LoggedIn}">
         <a id="login" onclick="document.getElementById('loginDiv').style.display='block'" style="width:auto;">Sign In</a>

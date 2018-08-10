@@ -55,7 +55,7 @@ public class ILController {
         return "redirect:/";
     }
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public String removeSessionCookie(HttpServletResponse response,
                              HttpServletRequest request) {
         Cookie sessionCookie = new Cookie("JSESSIONID", null);
@@ -63,7 +63,7 @@ public class ILController {
         response.addCookie(sessionCookie);
         HttpSession session = request.getSession(true);
         session.invalidate();
-        return "index";
+        return "redirect:/";
     }
 }
 
