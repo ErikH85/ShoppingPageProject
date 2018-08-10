@@ -18,33 +18,40 @@ public class ILRepository {
     @Autowired
     public DataSource dataSource;
 
-    public Boolean verifyLogin(String email, String password) throws SQLException {
-        List<User> users = new ArrayList <>();
+    public String verifyLogin(String email) throws SQLException {
+
+        String pw = "";
 
         try {
             Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement("SELECT [userID], [firstname], [lastname], [address], [email], [password] FROM [users] WHERE [email] = ? AND [password] = ?");
+            PreparedStatement ps = conn.prepareStatement("SELECT [password] FROM [users] WHERE [email] = ?");
             ps.setString(1, email);
-            ps.setString(2, password);
             ResultSet resultSet = ps.executeQuery();
-
-            while (resultSet.next()) {
-                User user = new User(resultSet.getInt("userID"), resultSet.getString("firstname"),
-                        resultSet.getString("lastname"), resultSet.getString("address"),
-                        resultSet.getString("email"), resultSet.getString("password"));
-
-                users.add(user);
-
-            }
-            if (users.size() > 0) {
-                return true;
-            }
-
+            resultSet.next();
+            pw = resultSet.getString("password");
         }catch (SQLException e) {
             e.printStackTrace();
 
         }
-        return false;
+        return pw;
+    }
+
+    public int getUserID(String email){
+
+        int id = 0;
+
+        try {
+            Connection conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement("SELECT [userID] FROM [users] WHERE [email] = ?");
+            ps.setString(1, email);
+            ResultSet resultSet = ps.executeQuery();
+            resultSet.next();
+            id = resultSet.getInt("userID");
+        }catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return id;
     }
 }
 
