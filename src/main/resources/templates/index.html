@@ -350,14 +350,36 @@
             <h1>Shopping Cart</h1>
             <p>Your items</p>
 
+            <div class="products">
 
+            <div class="product-item">
+                <h3>Product:</h3>
+                <ul>
+                    <li th:each="shoppingCart : ${shoppingCartInventory}" th:text="${shoppingCart.productName}">
 
-            <li th:each="shoppingCart : ${shoppingCartInventory}" th:text="${shoppingCart.productName} + ' ' + ${shoppingCart.price}
-              + ' ' + ${shoppingCart.quantity}">
+                    </li>
+                </ul>
+            </div>
 
-            </li>
+            <div class="product-item">
+                <h3>Price:</h3>
+                <ul>
+                    <li th:each="shoppingCart : ${shoppingCartInventory}" th:text="${shoppingCart.price}">
 
+                    </li>
+                </ul>
+            </div>
 
+            <div class="product-item">
+                <h3>Quantity:</h3>
+                <ul>
+                    <li th:each="shoppingCart : ${shoppingCartInventory}" th:text="${shoppingCart.quantity}">
+
+                    </li>
+                </ul>
+            </div>
+
+            </div>
 
             <div class="clearfix">
                 <button type="button" onclick="document.getElementById('cartDiv').style.display='none'" class="cancelbtn">Cancel</button>
