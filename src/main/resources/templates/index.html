@@ -395,7 +395,7 @@
 <!--Welcome Screen-->
 <div class="wrapper" th:if="${root}">
 <h1>Welcome</h1>
-    <h3>Choose A Category</h3>
+    <h3>Choose a Category</h3>
 </div>
 
 <!--Products-->
@@ -411,7 +411,7 @@
             <h3>Name</h3>
             <ul>
                 <li th:each="product, index :${Products}">
-                    <a th:href="@{addproduct(id=${product.ID})}"><input type="button" value="Add"></a> <span th:text="${product.productName}"></span>
+                    <span th:text="${product.productName}"></span>
                 </li>
             </ul>
         </div>
@@ -419,6 +419,14 @@
             <h3>Price</h3>
             <ul>
                 <li th:each="product:${Products}"th:text="${product.price}"></li>
+            </ul>
+        </div>
+        <div class="product-item">
+            <h3>Add to Cart</h3>
+            <ul>
+                <li th:each="product, index :${Products}">
+                <a th:href="@{addproduct(id=${product.ID})}"><input type="button" value="Add"></a>
+                </li>
             </ul>
         </div>
     </div>
@@ -429,7 +437,7 @@
 
     <h1>Välj leveransadress och betalalternativ</h1>
 
-    <form class="adressPayment" method="post">
+    <form class="adressPayment" action="/confirm" method="get">
         <div class="buyDiv">
             <ul>
                 <li th:each="address, p : ${allAddresses}">
