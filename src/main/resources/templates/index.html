@@ -4,23 +4,34 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="LpStyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 <body>
-<button onclick="document.getElementById('registerDiv').style.display='block'" style="width:auto;">Sign Up</button>
-<button onclick="document.getElementById('loginDiv').style.display='block'" style="width:auto;">Sign In</button>
-<button onclick="document.getElementById('cartDiv').style.display='block'" style="width:auto;">Cart</button>
 
-<ul>
-    <li th:each="product:${Products}"th:text="${product.productName} + ': ' + ${product.price}"></li>
-</ul>
-<div class="sidebar">
-    <p>Kategorier</p>
-    <a href="/spel">Spel</a>
-    <a href="/konsoller">Konsoller</a>
+<div class="topnav" id="myTopnav">
+    <a href="/">Home</a>
+    <span th:if="${LoggedIn}">
+        <a id="logout" style="width:auto;"; th:href="@{logout}">Sign Out</a>
+    </span>
+    <span th:unless="${LoggedIn}">
+        <a id="login" onclick="document.getElementById('loginDiv').style.display='block'" style="width:auto;">Sign In</a>
+        <a id="register" onclick="document.getElementById('registerDiv').style.display='block'" style="width:auto;">Register</a>
+    </span>
+
+
+    <a id="shoppingcart" onclick="document.getElementById('cartDiv').style.display='block'" style="width:auto;"><i class="fa fa-shopping-cart"></i></a>
+    <input type="text" placeholder="Search...">
 </div>
 
+<div id="mySidenav" class="sidenav">
+    <a id="games" href="/games">Games</a>
+    <a id="consoles" href="/consoles">Consoles</a>
+    <a href="#" id="projects">Projects</a>
+    <a href="#" id="contact">Contact</a>
+</div>
+
+<!--Register-->
 <div id="registerDiv" class="modal">
     <span onclick="document.getElementById('registerDiv').style.display='none'" class="close" title="Close Modal">&times;</span>
     <form class="modal-content" action="/register" method="post">
@@ -308,6 +319,7 @@
     </form>
 </div>
 
+<!--Login-->
 <div id="loginDiv" class="modal">
     <span onclick="document.getElementById('loginDiv').style.display='none'" class="close" title="Close Modal">&times;</span>
     <form class="modal-content" th:action="@{login}" method="post">
@@ -329,22 +341,100 @@
     </form>
 </div>
 
+<!--Shopping Cart-->
 <div id="cartDiv" class="modal">
-    <span onclick="document.getElementById('loginDiv').style.display='none'" class="close" title="Close Modal">&times;</span>
-    <form class="modal-content">
+    <span onclick="document.getElementById('cartDiv').style.display='none'" class="close" title="Close Modal">&times;</span>
+    <form class="modal-content" action="/buy" method="get">
         <div class="container">
             <h1>Shopping Cart</h1>
             <p>Your items</p>
+            
 
 
             <div class="clearfix">
                 <button type="button" onclick="document.getElementById('cartDiv').style.display='none'" class="cancelbtn">Cancel</button>
-                <button type="submit" class="signupbtn">Buy</button>
+                <button type="submit" class="signupbtn">Continue</button>
             </div>
         </div>
     </form>
 </div>
-<script src="main.js"></script>
 
+<!--Welcome Screen-->
+<div class="wrapper" th:if="${root}">
+<h1>Welcome</h1>
+    <h3>Choose A Category</h3>
+</div>
+
+<!--Products-->
+<div class="wrapper" th:if="${Products}">
+    <div class="products">
+        <div class="product-item">
+            <h3>Picture</h3>
+            <ul>
+                <li></li>
+            </ul>
+        </div>
+        <div class="product-item">
+            <h3>Name</h3>
+            <ul>
+                <li th:each="product:${Products}"th:text="${product.productName}"></li>
+            </ul>
+        </div>
+        <div class="product-item">
+            <h3>Price</h3>
+            <ul>
+                <li th:each="product:${Products}"th:text="${product.price}"></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--Buy-->
+<div class="wrapper" th:if="${buy}">
+
+    <h1>Välj leveransadress och betalalternativ</h1>
+
+    <form class="adressPayment" method="post">
+        <div class="buyDiv">
+            <ul>
+                <li th:each="address, p : ${allAddresses}">
+                    <input type="radio" name="addressRadio" th:value="${p.index}" th:id="address + ${p.index}" th:checked="${p.index == 0}?checked:false"><label th:for="address + ${p.index}" th:text="${address}"></label>
+                </li>
+            </ul>
+        </div>
+
+        <div class="buyDiv">
+            <div class="payment1">
+                <input class="" type="radio" name="paymentRadio" value="0">
+                <span class="">Visa</span>
+            </div>
+
+            <div class="payment2">
+                <input class="" type="radio" name="paymentRadio" value="1">
+                <span class="">MasterCard</span>
+            </div>
+
+            <div class="payment3">
+                <input class="" type="radio" name="paymentRadio" value="2">
+                <span class="">Klarna</span>
+            </div>
+        </div>
+        <input type="submit" class="submitBtn">
+    </form>
+</div>
+
+<!--Confirmation-->
+<div class="wrapper" th:if="${confirm}">
+
+    <h1>Tack för ditt köp!</h1>
+
+    <h2>Kvitto: </h2>
+
+    <ul>
+        <li th:each="order : ${allProducts}" th:text="${order.quantity} + ' ' + ${order.orderName}+ ' ' + ${order.price}"></li>
+    </ul>
+
+</div>
+<script src="main.js"></script>
 </body>
 </html>

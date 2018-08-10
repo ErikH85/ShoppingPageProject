@@ -2,11 +2,13 @@ package com.gavlehudik.shopping;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,7 +23,8 @@ public class ILController {
 
 
     @GetMapping("/")
-    private String getIndex(){
+    private String getIndex(Model model){
+        model.addAttribute("root", true);
         return "index";
     }
 
@@ -31,6 +34,7 @@ public class ILController {
         HttpSession session = request.getSession(true);
         if(session.getAttribute("LoggedIn") !=null) {
             System.out.println("inloggad");
+
         } else {
             System.out.println("utloggad");
         }
@@ -38,20 +42,28 @@ public class ILController {
     }
 
     @PostMapping("/login")
-    public String getUserInput(@RequestParam (name="email", required=true)String email, @RequestParam(name="password")String password,
+    public String getUserInput(@RequestParam (name="email")String email, @RequestParam(name="password")String password,
                                HttpServletRequest request) throws SQLException {
-        if(ilRepository.verifyLogin(email,password)) {
+
+        String pw = ilRepository.verifyLogin(email);
+        if(pw.equals(password)) {
             HttpSession session = request.getSession(true);
             session.setAttribute("LoggedIn", true);
+            int userID = ilRepository.getUserID(email);
+            session.setAttribute("userID",userID);
         }
         return "redirect:/";
     }
 
     @GetMapping("/logout")
-    public String removeSessionCookie(HttpServletResponse respons, HttpServletRequest request){
+    public String removeSessionCookie(HttpServletResponse response,
+                             HttpServletRequest request) {
+        Cookie sessionCookie = new Cookie("JSESSIONID", null);
+        sessionCookie.setMaxAge(0);
+        response.addCookie(sessionCookie);
         HttpSession session = request.getSession(true);
-        session.invalidate ();
-        return "/";
+        session.invalidate();
+        return "redirect:/";
     }
 }
 
