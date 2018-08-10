@@ -360,7 +360,9 @@
         <div class="product-item">
             <h3>Name</h3>
             <ul>
-                <li th:each="product:${Products}"th:text="${product.productName}"><button>Click here</button></li>
+                <li th:each="product, index :${Products}">
+                    <a th:href="@{addproduct(id=${product.ID})}"><input type="button" value="Add"></a> <span th:text="${product.productName}"></span>
+                </li>
             </ul>
         </div>
         <div class="product-item">

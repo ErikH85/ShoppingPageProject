@@ -3,6 +3,7 @@ package com.gavlehudik.shopping;
 public class Products {
     public String productName;
     public int price;
+    public int ID;
 
     public String getProductName() {
         return productName;
@@ -20,8 +21,9 @@ public class Products {
         this.price = price;
     }
 
-    public Products(String produceName, int price) {
-        this.productName = produceName;
+    public Products(String productName, int price, int ID) {
+        this.productName = productName;
         this.price = price;
+        this.ID = ID;
     }
 }
