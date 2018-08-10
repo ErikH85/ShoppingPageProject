@@ -46,6 +46,7 @@ ul{
     padding: 14px 16px;
     text-decoration: none;
     font-size: 17px;
+    cursor: pointer;
 }
 
 /* Add a dark background on topnav links and the dropdown button on hover */
@@ -63,6 +64,10 @@ ul{
 }
 
 #login {
+    float: right;
+}
+
+#logout {
     float: right;
 }
 

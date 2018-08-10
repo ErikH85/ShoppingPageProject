@@ -2,12 +2,14 @@ package com.gavlehudik.shopping;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -17,20 +19,22 @@ public class BuyController {
     private BuyRepository buyRepository;
 
     @GetMapping("/buy")
-    public ModelAndView getAddress(HttpServletRequest request){
-
+    public ModelAndView getAddress(HttpServletRequest request, Model model) {
+        model.addAttribute("buy", true);
         List<String> addresses;
 
+        HttpSession session = request.getSession(true);
 
-        //HttpSession session = request.getSession(true);
-        //User user = (User) session.getAttribute("user");
-        //addresses = confirmRepository.getAddress(user.getEmail());
+        if (session.getAttribute("LoggedIn") != null) {
 
+            int id = (Integer)session.getAttribute("userID");
+            addresses = buyRepository.getAddress(Integer.toString(id));
 
-
-        addresses = buyRepository.getAddress("1");
-
-        return new ModelAndView("buy").addObject("allAddresses", addresses);
+            return new ModelAndView("index").addObject("allAddresses", addresses);
+        } else {
+            System.out.println("utloggad");
+            return new ModelAndView("redirect:/");
+        }
     }
 
     @PostMapping("/buy")
