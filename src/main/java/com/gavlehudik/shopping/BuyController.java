@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -17,20 +18,25 @@ public class BuyController {
     private BuyRepository buyRepository;
 
     @GetMapping("/buy")
-    public ModelAndView getAddress(HttpServletRequest request){
+    public ModelAndView getAddress(HttpServletRequest request) {
 
         List<String> addresses;
 
+        HttpSession session = request.getSession(true);
 
-        //HttpSession session = request.getSession(true);
-        //User user = (User) session.getAttribute("user");
-        //addresses = confirmRepository.getAddress(user.getEmail());
+        if (session.getAttribute("LoggedIn") != null) {
+            System.out.println("inloggad");
 
 
+            int id = (Integer)session.getAttribute("userID");
+            addresses = buyRepository.getAddress(Integer.toString(id));
 
-        addresses = buyRepository.getAddress("1");
 
-        return new ModelAndView("buy").addObject("allAddresses", addresses);
+            return new ModelAndView("buy").addObject("allAddresses", addresses);
+        } else {
+            System.out.println("utloggad");
+            return new ModelAndView("redirect:/");
+        }
     }
 
     @PostMapping("/buy")

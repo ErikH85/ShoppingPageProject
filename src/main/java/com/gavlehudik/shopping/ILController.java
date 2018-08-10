@@ -38,11 +38,15 @@ public class ILController {
     }
 
     @PostMapping("/login")
-    public String getUserInput(@RequestParam (name="email", required=true)String email, @RequestParam(name="password")String password,
+    public String getUserInput(@RequestParam (name="email")String email, @RequestParam(name="password")String password,
                                HttpServletRequest request) throws SQLException {
-        if(ilRepository.verifyLogin(email,password)) {
+
+        String pw = ilRepository.verifyLogin(email);
+        if(pw.equals(password)) {
             HttpSession session = request.getSession(true);
             session.setAttribute("LoggedIn", true);
+            int userID = ilRepository.getUserID(email);
+            session.setAttribute("userID",userID);
         }
         return "redirect:/";
     }
