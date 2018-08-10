@@ -14,13 +14,13 @@ public class LPcontroller {
         @Autowired
         private LpRepository LPrepository;
         
-        @GetMapping("/konsoller")
-        public String konsoller(Model model) {
+        @GetMapping("/consoles")
+        public String consoles(Model model) {
             model.addAttribute("Products",LPrepository.getConsoles());
             return "index";
         }
-        @GetMapping("/spel")
-        public String spel(Model model) {
+        @GetMapping("/games")
+        public String games(Model model) {
             model.addAttribute("Products",LPrepository.getGames());
             return "index";
         }

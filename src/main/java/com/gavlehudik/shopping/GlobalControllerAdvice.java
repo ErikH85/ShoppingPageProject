@@ -17,7 +17,6 @@ public class GlobalControllerAdvice
         if(session.getAttribute("LoggedIn") != null) {
             model.addAttribute("LoggedIn", true);
         }
-
         model.addAttribute("session", session);
     }
 }
