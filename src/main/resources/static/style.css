@@ -11,19 +11,32 @@ body {
     width: 75%;
 }
 
-ul{
+ul {
     list-style-type:none;
     display: inline;
 }
 
-.products{
+.products {
     display: flex;
     text-align: left;
 }
 
-.product-item{
+.product-item {
     flex: 1;
     padding: 10px;
+}
+
+.product-img {
+    width: 200px;
+    height: 200px;
+}
+
+.product-img-spacing {
+    border-bottom: solid 3px black;
+}
+
+.product-spacing {
+    padding-bottom: 180px;
 }
 
 .buyDiv {

@@ -412,31 +412,43 @@
     <div class="products">
         <div class="product-item">
             <h3>Picture</h3>
-            <ul>
-                <li></li>
-            </ul>
+            <th:block th:each="product, index :${Products}">
+                <ul>
+                    <li class="product-img-spacing">
+                        <img class="product-img" th:for="${#ids.next('product')}" th:src="${product.imgSource}">
+                    </li>
+                </ul>
+            </th:block>
         </div>
         <div class="product-item">
             <h3>Name</h3>
+            <th:block th:each="product, index :${Products}">
             <ul>
-                <li th:each="product, index :${Products}">
-                    <span th:text="${product.productName}"></span>
+                <li class="product-spacing">
+                    <span th:for="${#ids.next('product')}" th:text="${product.productName}"></span>
                 </li>
             </ul>
+            </th:block>
         </div>
         <div class="product-item">
             <h3>Price</h3>
-            <ul>
-                <li th:each="product:${Products}"th:text="${product.price}"></li>
-            </ul>
+            <th:block th:each="product, index :${Products}">
+                <ul>
+                    <li class="product-spacing">
+                        <span th:for="${#ids.next('product')}" th:text="${product.price}"></span>
+                    </li>
+                </ul>
+            </th:block>
         </div>
         <div class="product-item">
             <h3>Add to Cart</h3>
-            <ul>
-                <li th:each="product, index :${Products}">
-                <a th:href="@{addproduct(id=${product.ID})}"><input type="button" value="Add"></a>
-                </li>
-            </ul>
+            <th:block th:each="product, index :${Products}">
+                <ul>
+                    <li class="product-spacing">
+                        <a th:for="${#ids.next('product')}" th:href="@{addproduct(id=${product.ID})}"><input type="button" value="Add"></a>
+                    </li>
+                </ul>
+            </th:block>
         </div>
     </div>
 </div>

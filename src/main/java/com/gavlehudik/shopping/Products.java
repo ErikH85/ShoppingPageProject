@@ -4,6 +4,7 @@ public class Products {
     public String productName;
     public int price;
     public int ID;
+    public String imgSource;
 
     public String getProductName() {
         return productName;
@@ -21,9 +22,10 @@ public class Products {
         this.price = price;
     }
 
-    public Products(String productName, int price, int ID) {
+    public Products(String productName, int price, int ID, String imgSource) {
         this.productName = productName;
         this.price = price;
         this.ID = ID;
+        this.imgSource = imgSource;
     }
 }
