@@ -63,11 +63,12 @@ public class LpRepository {
             ResultSet product = ps.executeQuery();
 
             product.next();
-            PreparedStatement ps1 = conn.prepareStatement("INSERT INTO shoppingCart VALUES(?,?,?,?)");
+            PreparedStatement ps1 = conn.prepareStatement("INSERT INTO shoppingCart VALUES(?,?,?,?,?)");
             ps1.setInt(1, userID);
-            ps1.setString(2, product.getString("productName"));
-            ps1.setInt(3, 1);
-            ps1.setInt(4, product.getInt("price"));
+            ps1.setInt(2, productID);
+            ps1.setString(3, product.getString("productName"));
+            ps1.setInt(4, 1);
+            ps1.setInt(5, product.getInt("price"));
             ps1.executeUpdate();
 
         } catch (SQLException e) {

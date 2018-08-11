@@ -2,14 +2,24 @@ package com.gavlehudik.shopping;
 
 public class ShoppingCart {
 
+    private int productID;
     private String productName;
     private int price;
     private int quantity;
 
-    public ShoppingCart(String productName, int price, int quantity){
+    public ShoppingCart(int productID, String productName, int price, int quantity){
+        this.productID = productID;
         this.productName = productName;
         this.price = price;
         this.quantity = quantity;
+    }
+
+    public int getProductID() {
+        return productID;
+    }
+
+    public void setProductID(int productID) {
+        this.productID = productID;
     }
 
     public String getProductName() {

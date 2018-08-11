@@ -1,7 +1,5 @@
 package com.gavlehudik.shopping;
 
-
-import com.gavlehudik.shopping.ShoppingCart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,13 +23,13 @@ public class SHRepository {
 
         try {
             Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement("SELECT productName, quantity, price FROM shoppingCart WHERE userID=?");
+            PreparedStatement ps = conn.prepareStatement("SELECT productID, productName, quantity, price FROM shoppingCart WHERE userID=?");
             ps.setString(1,userID);
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()){
-                shoppingCartInventory.add(new ShoppingCart(rs.getNString("productName"),
-                        rs.getInt("quantity"), rs.getInt("price")));
+                shoppingCartInventory.add(new ShoppingCart( rs.getInt("productID"), rs.getNString("productName"),
+                        rs.getInt("price"), rs.getInt("quantity")));
             }
 
         } catch (SQLException e) {
@@ -39,6 +37,34 @@ public class SHRepository {
         }
 
         return shoppingCartInventory;
+    }
+
+    public void removeProduct(int userID, int productID){
+        try{
+            Connection conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement("SELECT quantity FROM shoppingCart WHERE userID=? AND productID=?");
+            ps.setInt(1, userID);
+            ps.setInt(2, productID);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            int productQuantity = rs.getInt("quantity");
+            if(productQuantity > 1){
+                ps = conn.prepareStatement("UPDATE shoppingCart SET quantity=? WHERE userID=? AND productID=?");
+                ps.setInt(1,productQuantity-1);
+                ps.setInt(2,userID);
+                ps.setInt(3,productID);
+                ps.executeUpdate();
+            }
+            else{
+                ps = conn.prepareStatement("DELETE shoppingCart WHERE userID=? AND productID=? ");
+                ps.setInt(1,userID);
+                ps.setInt(2,productID);
+                ps.executeUpdate();
+            }
+        }
+        catch (SQLException e) {
+        e.printStackTrace();
+        }
     }
 
 }
