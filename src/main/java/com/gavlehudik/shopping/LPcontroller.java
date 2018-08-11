@@ -23,11 +23,25 @@ public class LPcontroller {
             model.addAttribute("Products",LPrepository.getConsoles());
             return "index";
         }
+
         @GetMapping("/games")
         public String games(Model model) {
             model.addAttribute("Products",LPrepository.getGames());
             return "index";
         }
+
+        @GetMapping("/accessories")
+        public String accessories(Model model) {
+        model.addAttribute("Products",LPrepository.getAccessories());
+        return "index";
+        }
+
+        @GetMapping("/phones")
+        public String phones(Model model) {
+        model.addAttribute("Products",LPrepository.getPhones());
+        return "index";
+        }
+
         @GetMapping("/addproduct")
         public String addProduct(@RequestParam String id, HttpServletRequest request) {
             HttpSession session = request.getSession(true);

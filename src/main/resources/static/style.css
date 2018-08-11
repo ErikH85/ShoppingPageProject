@@ -84,10 +84,10 @@ ul{
 #mySidenav a {
     position: absolute;
     margin-top: 75px;
-    left: -100px;
+    left: -120px;
     transition: 0.3s;
     padding: 15px;
-    width: 120px;
+    width: 140px;
     text-decoration: none;
     font-size: 17px;
     color: white;
@@ -99,22 +99,22 @@ ul{
 }
 
 #games {
-    top: 20px;
+    top: 40px;
     background-color: #4CAF50;
 }
 
 #consoles {
-    top: 80px;
+    top: 100px;
     background-color: #2196F3;
 }
 
-#projects {
-    top: 140px;
+#accessories {
+    top: 160px;
     background-color: #f44336;
 }
 
-#contact {
-    top: 200px;
+#phones {
+    top: 220px;
     background-color: #555
 }
 
@@ -198,7 +198,7 @@ button:hover {
     background-color: #fefefe;
     margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
     border: 1px solid #888;
-    width: 40%; /* Could be more or less, depending on screen size */
+    width: 50%; /* Could be more or less, depending on screen size */
 }
 
 /* Style the horizontal ruler */

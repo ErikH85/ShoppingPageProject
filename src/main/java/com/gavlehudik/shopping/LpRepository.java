@@ -35,6 +35,7 @@ public class LpRepository {
         }
         return products;
     }
+
     public List<Products> getGames() {
         List<Products> products = new ArrayList<>();
 
@@ -48,6 +49,43 @@ public class LpRepository {
                 products.add(product);
             }
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
+
+    public List<Products> getAccessories() {
+        List<Products> products = new ArrayList<>();
+
+        try {
+            Connection conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement("SELECT productName,price,productID FROM products WHERE category LIKE 'Tillbehör'");
+            ResultSet result = ps.executeQuery();
+
+            while(result.next()){
+                Products product = new Products(result.getString("productName"),result.getInt("price"),result.getInt("productID"));
+                products.add(product);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
+
+    public List<Products> getPhones() {
+        List<Products> products = new ArrayList<>();
+
+        try {
+            Connection conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement("SELECT productName,price,productID FROM products WHERE category LIKE 'Mobil'");
+            ResultSet result = ps.executeQuery();
+
+            while(result.next()){
+                Products product = new Products(result.getString("productName"),result.getInt("price"),result.getInt("productID"));
+                products.add(product);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
