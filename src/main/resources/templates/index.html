@@ -352,6 +352,9 @@
 
             <div class="products">
 
+
+
+
             <div class="product-item">
                 <h3>Product:</h3>
                 <ul>
@@ -378,6 +381,15 @@
                     </li>
                 </ul>
             </div>
+
+                <div class="product-item">
+                    <h3>Remove from Cart:</h3>
+                    <ul>
+                        <li th:each="shoppingCart : ${shoppingCartInventory}">
+                            <a th:href="@{removeProduct(id=${shoppingCart.productID})}"><input type="button" value="Remove"></a>
+                        </li>
+                    </ul>
+                </div>
 
             </div>
 
