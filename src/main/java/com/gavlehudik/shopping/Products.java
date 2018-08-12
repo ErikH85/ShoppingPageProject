@@ -5,6 +5,7 @@ public class Products {
     public int price;
     public int ID;
     public String imgSource;
+    public int quantity;
 
     public String getProductName() {
         return productName;
@@ -22,10 +23,11 @@ public class Products {
         this.price = price;
     }
 
-    public Products(String productName, int price, int ID, String imgSource) {
+    public Products(String productName, int price, int ID, String imgSource, int quantity) {
         this.productName = productName;
         this.price = price;
         this.ID = ID;
         this.imgSource = imgSource;
+        this.quantity = quantity;
     }
 }

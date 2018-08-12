@@ -62,7 +62,7 @@
 
             <label><b>Country</b></label>
 
-            <select name="country">
+            <select id="countrySelector" name="country">
                 <option value="AF">Afghanistan</option>
                 <option value="AX">Åland Islands</option>
                 <option value="AL">Albania</option>
@@ -441,11 +441,34 @@
             </th:block>
         </div>
         <div class="product-item">
+            <h3>Quantity</h3>
+            <th:block th:each="product, index :${Products}">
+                <ul>
+                    <li class="product-spacing">
+                        <span th:for="${#ids.next('product')}" th:text="${product.quantity} + ' (in stock)'"></span>
+                    </li>
+                </ul>
+            </th:block>
+        </div>
+        <div class="product-item">
             <h3>Add to Cart</h3>
             <th:block th:each="product, index :${Products}">
                 <ul>
                     <li class="product-spacing">
-                        <a th:for="${#ids.next('product')}" th:href="@{addproduct(id=${product.ID})}"><input type="button" value="Add"></a>
+                        <a th:for="${#ids.next('product')}" th:href="@{addproduct(id=${product.ID})}"><input type="button" value="Add">
+                            <select name="numberOfItems">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </a>
                     </li>
                 </ul>
             </th:block>

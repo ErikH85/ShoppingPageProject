@@ -21,11 +21,12 @@ public class LpRepository {
 
         try {
             Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement("SELECT productName,price,productID,imgSource FROM products WHERE category LIKE 'Konsoll'");
+            PreparedStatement ps = conn.prepareStatement("SELECT productName,price,productID,imgSource,quantity FROM products WHERE category LIKE 'Konsoll'");
             ResultSet result = ps.executeQuery();
 
             while(result.next()){
-                Products product = new Products(result.getString("productName"),result.getInt("price"),result.getInt("productID"),result.getString("imgSource"));
+                Products product = new Products(result.getString("productName"),result.getInt("price"),result.getInt("productID"),
+                        result.getString("imgSource"),result.getInt("quantity"));
                 products.add(product);
             }
 
@@ -41,11 +42,12 @@ public class LpRepository {
 
         try {
             Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement("SELECT productName,price,productID,imgSource FROM products WHERE category LIKE 'Spel'");
+            PreparedStatement ps = conn.prepareStatement("SELECT productName,price,productID,imgSource,quantity FROM products WHERE category LIKE 'Spel'");
             ResultSet result = ps.executeQuery();
 
             while(result.next()){
-                Products product = new Products(result.getString("productName"),result.getInt("price"),result.getInt("productID"),result.getString("imgSource"));
+                Products product = new Products(result.getString("productName"),result.getInt("price"),result.getInt("productID"),
+                        result.getString("imgSource"),result.getInt("quantity"));
                 products.add(product);
             }
 
@@ -60,11 +62,12 @@ public class LpRepository {
 
         try {
             Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement("SELECT productName,price,productID,imgSource FROM products WHERE category LIKE 'Tillbehör'");
+            PreparedStatement ps = conn.prepareStatement("SELECT productName,price,productID,imgSource,quantity FROM products WHERE category LIKE 'Tillbehör'");
             ResultSet result = ps.executeQuery();
 
             while(result.next()){
-                Products product = new Products(result.getString("productName"),result.getInt("price"),result.getInt("productID"),result.getString("imgSource"));
+                Products product = new Products(result.getString("productName"),result.getInt("price"),result.getInt("productID"),
+                        result.getString("imgSource"),result.getInt("quantity"));
                 products.add(product);
             }
 
@@ -79,11 +82,12 @@ public class LpRepository {
 
         try {
             Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement("SELECT productName,price,productID,imgSource FROM products WHERE category LIKE 'Mobil'");
+            PreparedStatement ps = conn.prepareStatement("SELECT productName,price,productID,imgSource,quantity FROM products WHERE category LIKE 'Mobil'");
             ResultSet result = ps.executeQuery();
 
             while(result.next()){
-                Products product = new Products(result.getString("productName"),result.getInt("price"),result.getInt("productID"),result.getString("imgSource"));
+                Products product = new Products(result.getString("productName"),result.getInt("price"),result.getInt("productID"),
+                        result.getString("imgSource"),result.getInt("quantity"));
                 products.add(product);
             }
 
