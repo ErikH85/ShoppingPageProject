@@ -45,4 +45,23 @@ public class RFRepository {
         }
         return newUserStatus;
     }
+
+    public void addAddresses(String email, String addresses){
+
+        try {
+            Connection conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement("SELECT userID FROM users WHERE email = ?");
+            ps.setString(1, email);
+            ResultSet resultSet = ps.executeQuery();
+
+            PreparedStatement ps2 = conn.prepareStatement("INSERT INTO Addresses VALUES(?,?)");
+            ps2.setString(1, email);
+            ps2.setString(2, addresses);
+
+            conn.close();
+
+    } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
