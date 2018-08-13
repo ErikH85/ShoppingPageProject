@@ -46,6 +46,13 @@ public class SHRepository {
             ResultSet rs = ps.executeQuery();
             rs.next();
             int productQuantity = rs.getInt("quantity");
+
+            PreparedStatement ps2 = conn.prepareStatement("SELECT quantity FROM products WHERE productID=?");
+            ps2.setInt(1, productID);
+            ResultSet rs2 = ps2.executeQuery();
+            rs2.next();
+            int totalQuantity = rs2.getInt("quantity");
+
             if(productQuantity > amount){
                 ps = conn.prepareStatement("UPDATE shoppingCart SET quantity=? WHERE userID=? AND productID=?");
                 ps.setInt(1,productQuantity - amount);
@@ -53,11 +60,11 @@ public class SHRepository {
                 ps.setInt(3,productID);
                 ps.executeUpdate();
 
-                int newQuantity = productQuantity + amount;
-                PreparedStatement ps2 = conn.prepareStatement("UPDATE products SET quantity=? WHERE productID=?");
-                ps2.setInt(1, newQuantity);
-                ps2.setInt(2, productID);
-                ps2.executeUpdate();
+                int newQuantity = totalQuantity + amount;
+                PreparedStatement ps3 = conn.prepareStatement("UPDATE products SET quantity=? WHERE productID=?");
+                ps3.setInt(1, newQuantity);
+                ps3.setInt(2, productID);
+                ps3.executeUpdate();
                 conn.close();
             }
             else{
@@ -66,11 +73,11 @@ public class SHRepository {
                 ps.setInt(2,productID);
                 ps.executeUpdate();
 
-                int newQuantity = productQuantity + amount;
-                PreparedStatement ps2 = conn.prepareStatement("UPDATE products SET quantity=? WHERE productID=?");
-                ps2.setInt(1, newQuantity);
-                ps2.setInt(2, productID);
-                ps2.executeUpdate();
+                int newQuantity = totalQuantity + amount;
+                PreparedStatement ps4 = conn.prepareStatement("UPDATE products SET quantity=? WHERE productID=?");
+                ps4.setInt(1, newQuantity);
+                ps4.setInt(2, productID);
+                ps4.executeUpdate();
             }
             conn.close();
         }
