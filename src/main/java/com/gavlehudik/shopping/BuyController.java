@@ -15,6 +15,9 @@ import java.util.List;
 @Controller
 public class BuyController {
 
+    private int addressOption;
+    private int paymentOption;
+
     @Autowired
     private BuyRepository buyRepository;
 
@@ -30,23 +33,33 @@ public class BuyController {
             int id = (Integer)session.getAttribute("userID");
             addresses = buyRepository.getAddress(Integer.toString(id));
 
+
             return new ModelAndView("index").addObject("allAddresses", addresses);
         } else {
-            System.out.println("utloggad");
             return new ModelAndView("redirect:/");
         }
     }
 
     @PostMapping("/buy")
-    public String postForm(@RequestParam String addressRadio,
-                           @RequestParam String paymentRadio){
+    public String postForm(@RequestParam String paymentRadio, HttpServletRequest request){
 
-        String addressOption = addressRadio;
-        String paymentOption = paymentRadio;
-        System.out.println(addressOption + " " + paymentOption);
+        HttpSession session = request.getSession(true);
 
-        return "buy";
+        int payment = Integer.parseInt(paymentRadio);
+
+        session.setAttribute("paymentOption", payment);
+
+        System.out.println(payment);
+
+        return "redirect:/confirm";
 
     }
 
+    public int getAddressOption() {
+        return addressOption;
+    }
+
+    public int getPaymentOption() {
+        return paymentOption;
+    }
 }

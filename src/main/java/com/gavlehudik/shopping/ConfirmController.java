@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -15,13 +16,46 @@ public class ConfirmController {
     @Autowired
     private ConfirmRepository confirmRepository;
 
+    @Autowired
+    private SHRepository shRepository;
+
 
     @GetMapping("/confirm")
     public ModelAndView getOrder(HttpServletRequest request, Model model){
         model.addAttribute("confirm", true);
-        List<Order>  products;
 
-        products = confirmRepository.getReceipt("1");
-        return new ModelAndView("index").addObject("allProducts", products);
+        List<ShoppingCart> shoppingCartInventory;
+        HttpSession session = request.getSession(true);
+
+        String payment = "";
+
+        if(session.getAttribute("LoggedIn") != null){
+            int id = (int)session.getAttribute("userID");
+            shoppingCartInventory = shRepository.getShoppingCart(Integer.toString(id));
+
+            int paymentOption = (int) session.getAttribute("paymentOption");
+
+            switch (paymentOption){
+                case 0:
+                    payment = "Visa";
+                    break;
+                case 1:
+                    payment = "MasterCard";
+                    break;
+                case 2:
+                    payment = "Klarna";
+                    break;
+
+            }
+
+            System.out.println(payment);
+
+            return new ModelAndView("index").addObject("shoppingCartInventory", shoppingCartInventory)
+                    .addObject("paymentOption", payment);
+
+        }
+        else{
+            return new ModelAndView("index");
+        }
     }
 }
