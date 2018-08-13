@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +27,7 @@ public class ConfirmController {
 
         List<ShoppingCart> shoppingCartInventory;
         HttpSession session = request.getSession(true);
+
 
         String payment = "";
 
@@ -50,6 +52,7 @@ public class ConfirmController {
 
             System.out.println(payment);
 
+
             return new ModelAndView("index").addObject("shoppingCartInventory", shoppingCartInventory)
                     .addObject("paymentOption", payment);
 
@@ -58,4 +61,16 @@ public class ConfirmController {
             return new ModelAndView("index");
         }
     }
+
+    @PostMapping("/confirm")
+    public String emptyShoppingCart(HttpServletRequest request){
+
+        HttpSession session = request.getSession(true);
+        if(session.getAttribute("LoggedIn") != null) {
+            int id = (int) session.getAttribute("userID");
+            confirmRepository.removeFromCart(id);
+        }
+            return "index";
+    }
+
 }
