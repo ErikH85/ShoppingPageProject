@@ -1,17 +1,588 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="LpStyle.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 <body>
-<a href=""> Logga in/Registrera</a>
-<div class="sidebar">
-    <p>Kategorier</p>
-    <a href="">Spel</a>
-    <a href="">Konsoller</a>
+
+<div class="topnav" id="myTopnav">
+    <a href="/">Home</a>
+    <span th:if="${LoggedIn}">
+        <a id="logout" style="width:auto;"; th:href="@{logout}">Sign Out</a>
+    </span>
+    <span th:unless="${LoggedIn}">
+        <a id="login" onclick="document.getElementById('loginDiv').style.display='block'" style="width:auto;">Sign In</a>
+        <a id="register" onclick="document.getElementById('registerDiv').style.display='block'" style="width:auto;">Register</a>
+    </span>
+
+
+    <a th:href="@{getShoppingCart}" method="get" id="shoppingcart"  style="width:auto;"><i class="fa fa-shopping-cart" ></i></a>
+    <input type="text" placeholder="Search...">
 </div>
 
+<div id="mySidenav" class="sidenav">
+    <a id="games" href="/games">Games</a>
+    <a id="consoles" href="/consoles">Consoles</a>
+    <a href="accessories" id="accessories">Accessories</a>
+    <a href="phones" id="phones">Phones</a>
+</div>
+
+<!--Register-->
+<div id="registerDiv" class="modal">
+    <span onclick="document.getElementById('registerDiv').style.display='none'" class="close" title="Close Modal">&times;</span>
+    <form class="modal-content" action="/register" method="post">
+        <div class="container">
+            <h1>Sign Up</h1>
+            <p>Please fill in this form to create an account</p>
+            <hr>
+            <label><b>Email</b></label>
+            <input type="email" placeholder="Enter Email" name="email" required>
+
+            <label><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="password" required>
+
+            <label><b>First Name</b></label>
+            <input type="text" placeholder="First Name" name="firstname" required>
+
+            <label><b>Last Name</b></label>
+            <input type="text" placeholder="Last Name" name="lastname" required>
+
+            <label><b>Address</b></label>
+            <input type="text" placeholder="Address" name="address" required>
+
+            <label><b>ZIP Code</b></label>
+            <input type="text" placeholder="ZIP Code" name="zipcode" required>
+
+            <label><b>City</b></label>
+            <input type="text" placeholder="City" name="city" required>
+
+            <label><b>Country</b></label>
+
+            <select id="countrySelector" name="country">
+                <option value="AF">Afghanistan</option>
+                <option value="AX">Åland Islands</option>
+                <option value="AL">Albania</option>
+                <option value="DZ">Algeria</option>
+                <option value="AS">American Samoa</option>
+                <option value="AD">Andorra</option>
+                <option value="AO">Angola</option>
+                <option value="AI">Anguilla</option>
+                <option value="AQ">Antarctica</option>
+                <option value="AG">Antigua and Barbuda</option>
+                <option value="AR">Argentina</option>
+                <option value="AM">Armenia</option>
+                <option value="AW">Aruba</option>
+                <option value="AU">Australia</option>
+                <option value="AT">Austria</option>
+                <option value="AZ">Azerbaijan</option>
+                <option value="BS">Bahamas</option>
+                <option value="BH">Bahrain</option>
+                <option value="BD">Bangladesh</option>
+                <option value="BB">Barbados</option>
+                <option value="BY">Belarus</option>
+                <option value="BE">Belgium</option>
+                <option value="BZ">Belize</option>
+                <option value="BJ">Benin</option>
+                <option value="BM">Bermuda</option>
+                <option value="BT">Bhutan</option>
+                <option value="BO">Bolivia, Plurinational State of</option>
+                <option value="BA">Bosnia and Herzegovina</option>
+                <option value="BW">Botswana</option>
+                <option value="BV">Bouvet Island</option>
+                <option value="BR">Brazil</option>
+                <option value="IO">British Indian Ocean Territory</option>
+                <option value="BN">Brunei Darussalam</option>
+                <option value="BG">Bulgaria</option>
+                <option value="BF">Burkina Faso</option>
+                <option value="BI">Burundi</option>
+                <option value="KH">Cambodia</option>
+                <option value="CM">Cameroon</option>
+                <option value="CA">Canada</option>
+                <option value="CV">Cape Verde</option>
+                <option value="KY">Cayman Islands</option>
+                <option value="CF">Central African Republic</option>
+                <option value="TD">Chad</option>
+                <option value="CL">Chile</option>
+                <option value="CN">China, People's Republic of</option>
+                <option value="CX">Christmas Island</option>
+                <option value="CC">Cocos (Keeling) Islands</option>
+                <option value="CO">Colombia</option>
+                <option value="KM">Comoros</option>
+                <option value="CG">Congo</option>
+                <option value="CD">Congo, The Democratic Republic of the</option>
+                <option value="CK">Cook Islands</option>
+                <option value="CR">Costa Rica</option>
+                <option value="CI">Côte d'Ivoire</option>
+                <option value="HR">Croatia</option>
+                <option value="CU">Cuba</option>
+                <option value="CY">Cyprus</option>
+                <option value="CZ">Czech Republic</option>
+                <option value="DK">Denmark</option>
+                <option value="DJ">Djibouti</option>
+                <option value="DM">Dominica</option>
+                <option value="DO">Dominican Republic</option>
+                <option value="EC">Ecuador</option>
+                <option value="EG">Egypt</option>
+                <option value="SV">El Salvador</option>
+                <option value="GQ">Equatorial Guinea</option>
+                <option value="ER">Eritrea</option>
+                <option value="EE">Estonia</option>
+                <option value="ET">Ethiopia</option>
+                <option value="FK">Falkland Islands (Malvinas)</option>
+                <option value="FO">Faroe Islands</option>
+                <option value="FJ">Fiji</option>
+                <option value="FI">Finland</option>
+                <option value="FR">France</option>
+                <option value="GF">French Guiana</option>
+                <option value="PF">French Polynesia</option>
+                <option value="TF">French Southern Territories</option>
+                <option value="GA">Gabon</option>
+                <option value="GM">Gambia</option>
+                <option value="GE">Georgia</option>
+                <option value="DE">Germany</option>
+                <option value="GH">Ghana</option>
+                <option value="GI">Gibraltar</option>
+                <option value="GR">Greece</option>
+                <option value="GL">Greenland</option>
+                <option value="GD">Grenada</option>
+                <option value="GP">Guadeloupe</option>
+                <option value="GU">Guam</option>
+                <option value="GT">Guatemala</option>
+                <option value="GG">Guernsey</option>
+                <option value="GN">Guinea</option>
+                <option value="GW">Guinea-Bissau</option>
+                <option value="GY">Guyana</option>
+                <option value="HT">Haiti</option>
+                <option value="HM">Heard Island and McDonald Islands</option>
+                <option value="VA">Holy See (Vatican City State)</option>
+                <option value="HN">Honduras</option>
+                <option value="HK">Hong Kong</option>
+                <option value="HU">Hungary</option>
+                <option value="IS">Iceland</option>
+                <option value="IN">India</option>
+                <option value="ID">Indonesia</option>
+                <option value="IR">Iran, Islamic Republic of</option>
+                <option value="IQ">Iraq</option>
+                <option value="IE">Ireland</option>
+                <option value="IM">Isle of Man</option>
+                <option value="IL">Israel</option>
+                <option value="IT">Italy</option>
+                <option value="JM">Jamaica</option>
+                <option value="JP">Japan</option>
+                <option value="JE">Jersey</option>
+                <option value="JO">Jordan</option>
+                <option value="KZ">Kazakhstan</option>
+                <option value="KE">Kenya</option>
+                <option value="KI">Kiribati</option>
+                <option value="KP">Korea, Democratic People's Republic of</option>
+                <option value="KR">Korea, Republic of</option>
+                <option value="KW">Kuwait</option>
+                <option value="KG">Kyrgyzstan</option>
+                <option value="LA">Lao People's Democratic Republic</option>
+                <option value="LV">Latvia</option>
+                <option value="LB">Lebanon</option>
+                <option value="LS">Lesotho</option>
+                <option value="LR">Liberia</option>
+                <option value="LY">Libyan Arab Jamahiriya</option>
+                <option value="LI">Liechtenstein</option>
+                <option value="LT">Lithuania</option>
+                <option value="LU">Luxembourg</option>
+                <option value="MO">Macao</option>
+                <option value="MK">Macedonia, The Former Yugoslav Republic of</option>
+                <option value="MG">Madagascar</option>
+                <option value="MW">Malawi</option>
+                <option value="MY">Malaysia</option>
+                <option value="MV">Maldives</option>
+                <option value="ML">Mali</option>
+                <option value="MT">Malta</option>
+                <option value="MH">Marshall Islands</option>
+                <option value="MQ">Martinique</option>
+                <option value="MR">Mauritania</option>
+                <option value="MU">Mauritius</option>
+                <option value="YT">Mayotte</option>
+                <option value="MX">Mexico</option>
+                <option value="FM">Micronesia, Federated States of</option>
+                <option value="MD">Moldova, Republic of</option>
+                <option value="MC">Monaco</option>
+                <option value="MN">Mongolia</option>
+                <option value="ME">Montenegro</option>
+                <option value="MS">Montserrat</option>
+                <option value="MA">Morocco</option>
+                <option value="MZ">Mozambique</option>
+                <option value="MM">Myanmar</option>
+                <option value="NA">Namibia</option>
+                <option value="NR">Nauru</option>
+                <option value="NP">Nepal</option>
+                <option value="NL">Netherlands</option>
+                <option value="AN">Netherlands Antilles</option>
+                <option value="NC">New Caledonia</option>
+                <option value="NZ">New Zealand</option>
+                <option value="NI">Nicaragua</option>
+                <option value="NE">Niger</option>
+                <option value="NG">Nigeria</option>
+                <option value="NU">Niue</option>
+                <option value="NF">Norfolk Island</option>
+                <option value="MP">Northern Mariana Islands</option>
+                <option value="NO">Norway</option>
+                <option value="OM">Oman</option>
+                <option value="PK">Pakistan</option>
+                <option value="PW">Palau</option>
+                <option value="PS">Palestinian Territory, Occupied</option>
+                <option value="PA">Panama</option>
+                <option value="PG">Papua New Guinea</option>
+                <option value="PY">Paraguay</option>
+                <option value="PE">Peru</option>
+                <option value="PH">Philippines</option>
+                <option value="PN">Pitcairn</option>
+                <option value="PL">Poland</option>
+                <option value="PT">Portugal</option>
+                <option value="PR">Puerto Rico</option>
+                <option value="QA">Qatar</option>
+                <option value="RE">Réunion</option>
+                <option value="RO">Romania</option>
+                <option value="RU">Russian Federation</option>
+                <option value="RW">Rwanda</option>
+                <option value="BL">Saint Barthélemy</option>
+                <option value="SH">Saint Helena, Ascension and Tristan Da Cunha</option>
+                <option value="KN">Saint Kitts and Nevis</option>
+                <option value="LC">Saint Lucia</option>
+                <option value="MF">Saint Martin</option>
+                <option value="PM">Saint Pierre and Miquelon</option>
+                <option value="VC">Saint Vincent and the Grenadines</option>
+                <option value="WS">Samoa</option>
+                <option value="SM">San Marino</option>
+                <option value="ST">Sao Tome and Principe</option>
+                <option value="SA">Saudi Arabia</option>
+                <option value="SN">Senegal</option>
+                <option value="RS">Serbia</option>
+                <option value="SC">Seychelles</option>
+                <option value="SL">Sierra Leone</option>
+                <option value="SG">Singapore</option>
+                <option value="SK">Slovakia</option>
+                <option value="SI">Slovenia</option>
+                <option value="SB">Solomon Islands</option>
+                <option value="SO">Somalia</option>
+                <option value="ZA">South Africa</option>
+                <option value="GS">South Georgia and the South Sandwich Islands</option>
+                <option value="ES">Spain</option>
+                <option value="LK">Sri Lanka</option>
+                <option value="SD">Sudan</option>
+                <option value="SR">Suriname</option>
+                <option value="SJ">Svalbard and Jan Mayen</option>
+                <option value="SZ">Swaziland</option>
+                <option value="SE" selected>Sweden</option>
+                <option value="CH">Switzerland</option>
+                <option value="SY">Syrian Arab Republic</option>
+                <option value="TW">Taiwan</option>
+                <option value="TJ">Tajikistan</option>
+                <option value="TZ">Tanzania, United Republic of</option>
+                <option value="TH">Thailand</option>
+                <option value="TL">Timor-Leste</option>
+                <option value="TG">Togo</option>
+                <option value="TK">Tokelau</option>
+                <option value="TO">Tonga</option>
+                <option value="TT">Trinidad and Tobago</option>
+                <option value="TN">Tunisia</option>
+                <option value="TR">Turkey</option>
+                <option value="TM">Turkmenistan</option>
+                <option value="TC">Turks and Caicos Islands</option>
+                <option value="TV">Tuvalu</option>
+                <option value="UG">Uganda</option>
+                <option value="UA">Ukraine</option>
+                <option value="AE">United Arab Emirates</option>
+                <option value="GB">United Kingdom</option>
+                <option value="US">United States</option>
+                <option value="UM">United States Minor Outlying Islands</option>
+                <option value="UY">Uruguay</option>
+                <option value="UZ">Uzbekistan</option>
+                <option value="VU">Vanuatu</option>
+                <option value="VE">Venezuela, Bolivarian Republic of</option>
+                <option value="VN">Viet Nam</option>
+                <option value="VG">Virgin Islands, British</option>
+                <option value="VI">Virgin Islands, U.S.</option>
+                <option value="WF">Wallis and Futuna</option>
+                <option value="EH">Western Sahara</option>
+                <option value="YE">Yemen</option>
+                <option value="ZM">Zambia</option>
+                <option value="ZW">Zimbabwe</option>
+            </select>
+
+            <div class="clearfix">
+                <button type="button" onclick="document.getElementById('registerDiv').style.display='none'" class="cancelbtn">Cancel</button>
+                <button type="submit" class="signupbtn">Sign Up</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!--Login-->
+<div id="loginDiv" class="modal">
+    <span onclick="document.getElementById('loginDiv').style.display='none'" class="close" title="Close Modal">&times;</span>
+    <form class="modal-content" th:action="@{login}" method="post">
+        <div class="container">
+            <h1>Sign In</h1>
+            <p>Please fill in this form to sign in</p>
+            <hr>
+            <label><b>Email</b></label>
+            <input type="email" placeholder="Enter Email" name="email" required>
+
+            <label><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="password" required>
+
+            <div class="clearfix">
+                <button type="button" onclick="document.getElementById('loginDiv').style.display='none'" class="cancelbtn">Cancel</button>
+                <button type="submit" class="signupbtn">Sign In</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!--Shopping Cart-->
+<div id="cartDiv" class="shoppingCartModal" th:if="${shoppingCart}">
+    <span onclick="document.getElementById('cartDiv').style.display='none'" class="close" title="Close Modal">&times;</span>
+    <form class="modal-content" th:action="@{/buy}" method="get">
+
+        <div class="container">
+            <h1>Shopping Cart</h1>
+            <p>Your items</p>
+
+            <div class="products">
+
+
+
+
+            <div class="product-item">
+                <h4>Product:</h4>
+                <ul>
+                    <li th:each="shoppingCart : ${shoppingCartInventory}" th:text="${shoppingCart.productName}">
+
+                    </li>
+                </ul>
+            </div>
+
+            <div class="product-item">
+                <h4>Price:</h4>
+                <ul>
+                    <li th:each="shoppingCart : ${shoppingCartInventory}" th:text="${shoppingCart.price} + ' SEK'">
+
+                    </li>
+                </ul>
+            </div>
+
+            <div class="product-item">
+                <h4>Quantity:</h4>
+                <ul>
+                    <li th:each="shoppingCart : ${shoppingCartInventory}" th:text="${shoppingCart.quantity}">
+
+                    </li>
+                </ul>
+            </div>
+
+                <div class="product-item">
+                    <h4>Remove from Cart:</h4>
+                    <th:block th:each="shoppingCart, index :${shoppingCartInventory}">
+                        <ul>
+                            <li>
+                                <form th:for="${#ids.next('shoppingCart')}" th:action="@{/removeProduct/{id}(id=${shoppingCart.productID})}" method="post">
+                                    <select name="numberOfItems">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                    <input type="submit" value="Remove">
+                                </form>
+                            </li>
+                        </ul>
+                    </th:block>
+                </div>
+
+            </div>
+
+            <div class="clearfix">
+                <button type="button" onclick="document.getElementById('cartDiv').style.display='none'" class="cancelbtn">Cancel</button>
+                <button type="submit" class="signupbtn">Continue</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!--Welcome Screen-->
+<div class="wrapper" th:if="${root}">
+<h1>Welcome</h1>
+    <h3>Choose a Category</h3>
+</div>
+
+<!--Products-->
+<div class="wrapper" th:if="${Products}">
+    <div class="products">
+        <div class="product-item">
+            <h3>Picture</h3>
+            <th:block th:each="product, index :${Products}">
+                <ul>
+                    <li class="product-img-spacing">
+                        <img class="product-img" th:for="${#ids.next('product')}" th:src="${product.imgSource}">
+                    </li>
+                </ul>
+            </th:block>
+        </div>
+        <div class="product-item">
+            <h3>Name</h3>
+            <th:block th:each="product, index :${Products}">
+            <ul>
+                <li class="product-spacing">
+                    <span th:for="${#ids.next('product')}" th:text="${product.productName}"></span>
+                </li>
+            </ul>
+            </th:block>
+        </div>
+        <div class="product-item">
+            <h3>Price</h3>
+            <th:block th:each="product, index :${Products}">
+                <ul>
+                    <li class="product-spacing">
+                        <span th:for="${#ids.next('product')}" th:text="${product.price} + ' SEK'"></span>
+                    </li>
+                </ul>
+            </th:block>
+        </div>
+        <div class="product-item">
+            <h3>Quantity</h3>
+            <th:block th:each="product, index :${Products}">
+                <ul>
+                    <li class="product-spacing">
+                        <span th:for="${#ids.next('product')}" th:text="${product.quantity} + ' (in stock)'"></span>
+                    </li>
+                </ul>
+            </th:block>
+        </div>
+        <div class="product-item">
+            <h3>Add to Cart</h3>
+            <th:block th:each="product, index :${Products}">
+                <ul>
+                    <li class="product-spacing">
+                        <form th:for="${#ids.next('product')}" th:action="@{/addproduct/{id}(id=${product.ID})}" method="post">
+                            <select name="numberOfItems">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                            <input type="submit" value="Add">
+                        </form>
+                    </li>
+                </ul>
+            </th:block>
+        </div>
+    </div>
+</div>
+
+<!--Buy-->
+<div class="wrapper" th:if="${buy}">
+
+    <h1>Välj leveransadress och betalalternativ</h1>
+
+    <form class="adressPayment" action="/confirm" method="get">
+        <div class="buyDiv">
+            <ul>
+                <li th:each="address, p : ${allAddresses}">
+                    <input type="radio" name="addressRadio" th:value="${p.index}" th:id="address + ${p.index}" th:checked="${p.index == 0}?checked:false"><label th:for="address + ${p.index}" th:text="${address}"></label>
+                </li>
+            </ul>
+        </div>
+    </form>
+
+        <div class="buyDiv">
+            <form action="/buy" method="post">
+            <div class="payment1">
+                <input class="" type="radio" name="paymentRadio" value="0">
+                <span class="">Visa</span>
+            </div>
+
+            <div class="payment2">
+                <input class="" type="radio" name="paymentRadio" value="1">
+                <span class="">MasterCard</span>
+            </div>
+
+            <div class="payment3">
+                <input class="" type="radio" name="paymentRadio" value="2">
+                <span class="">Klarna</span>
+            </div>
+                <input type="submit" class="submitBtn">
+            </form>
+        </div>
+
+
+</div>
+
+<!--Confirmation-->
+<div class="wrapper" th:if="${confirm}">
+
+    <h1>Tack för ditt köp!</h1>
+
+    <h2>Kvitto: </h2>
+
+    <div class="container">
+
+        <div class="products">
+
+    <div class="product-item">
+        <h4>Product:</h4>
+        <ul>
+            <li th:each="shoppingCart : ${shoppingCartInventory}" th:text="${shoppingCart.productName}">
+
+            </li>
+        </ul>
+    </div>
+
+    <div class="product-item">
+        <h4>Price:</h4>
+        <ul>
+            <li th:each="shoppingCart : ${shoppingCartInventory}" th:text="${shoppingCart.price} + ' SEK'">
+
+            </li>
+        </ul>
+    </div>
+
+    <div class="product-item">
+        <h4>Quantity:</h4>
+        <ul>
+            <li th:each="shoppingCart : ${shoppingCartInventory}" th:text="${shoppingCart.quantity}">
+
+            </li>
+        </ul>
+    </div>
+
+
+
+   </div>
+
+        <h4>Payment Option:</h4>
+        <p th:text="${paymentOption}"></p>
+
+    </div>
+
+    <form action="/confirm" method="post">
+        <input type="submit" value="Continue">
+    </form>
+
+</div>
+<script src="main.js"></script>
 </body>
 </html>

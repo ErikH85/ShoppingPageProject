@@ -51,4 +51,20 @@ public class ConfirmRepository {
 
     }
 
+    public void removeFromCart(int userID){
+
+        try {
+            Connection conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement("DELETE shoppingCart WHERE userID=?");
+            ps.setInt(1,userID);
+            ps.executeUpdate();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
 }
