@@ -489,8 +489,10 @@
                 </li>
             </ul>
         </div>
+    </form>
 
         <div class="buyDiv">
+            <form action="/buy" method="post">
             <div class="payment1">
                 <input class="" type="radio" name="paymentRadio" value="0">
                 <span class="">Visa</span>
@@ -505,9 +507,11 @@
                 <input class="" type="radio" name="paymentRadio" value="2">
                 <span class="">Klarna</span>
             </div>
+                <input type="submit" class="submitBtn">
+            </form>
         </div>
-        <input type="submit" class="submitBtn">
-    </form>
+
+
 </div>
 
 <!--Confirmation-->
@@ -517,9 +521,45 @@
 
     <h2>Kvitto: </h2>
 
-    <ul>
-        <li th:each="order : ${allProducts}" th:text="${order.quantity} + ' ' + ${order.orderName}+ ' ' + ${order.price}"></li>
-    </ul>
+    <div class="container">
+
+        <div class="products">
+
+    <div class="product-item">
+        <h4>Product:</h4>
+        <ul>
+            <li th:each="shoppingCart : ${shoppingCartInventory}" th:text="${shoppingCart.productName}">
+
+            </li>
+        </ul>
+    </div>
+
+    <div class="product-item">
+        <h4>Price:</h4>
+        <ul>
+            <li th:each="shoppingCart : ${shoppingCartInventory}" th:text="${shoppingCart.price}">
+
+            </li>
+        </ul>
+    </div>
+
+    <div class="product-item">
+        <h4>Quantity:</h4>
+        <ul>
+            <li th:each="shoppingCart : ${shoppingCartInventory}" th:text="${shoppingCart.quantity}">
+
+            </li>
+        </ul>
+    </div>
+
+
+
+   </div>
+
+        <h4>Payment Option:</h4>
+        <p th:text="${paymentOption}"></p>
+
+    </div>
 
 </div>
 <script src="main.js"></script>
