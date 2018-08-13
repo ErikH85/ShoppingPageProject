@@ -97,21 +97,28 @@ public class LpRepository {
         return products;
     }
 
-    public void addProduct(int productID,int userID) {
+    public void addProduct(int productID,int userID, int amount) {
         try {
             Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement("SELECT productName,price FROM products WHERE productID=?");
+            PreparedStatement ps = conn.prepareStatement("SELECT productName,price,quantity FROM products WHERE productID=?");
             ps.setInt(1, productID);
             ResultSet product = ps.executeQuery();
-
             product.next();
+            int quantity = product.getInt("quantity");
+
             PreparedStatement ps1 = conn.prepareStatement("INSERT INTO shoppingCart VALUES(?,?,?,?,?)");
             ps1.setInt(1, userID);
             ps1.setInt(2, productID);
             ps1.setString(3, product.getString("productName"));
-            ps1.setInt(4, 1);
+            ps1.setInt(4, amount);
             ps1.setInt(5, product.getInt("price"));
             ps1.executeUpdate();
+
+            int newQuantity = quantity - amount;
+            PreparedStatement ps2 = conn.prepareStatement("UPDATE products SET quantity=? WHERE productID=?");
+            ps2.setInt(1, newQuantity);
+            ps2.setInt(2, productID);
+            ps2.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();

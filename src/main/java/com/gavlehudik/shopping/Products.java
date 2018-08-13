@@ -3,6 +3,8 @@ package com.gavlehudik.shopping;
 public class Products {
     public String productName;
     public int price;
+
+
     public int ID;
     public String imgSource;
     public int quantity;
@@ -21,6 +23,14 @@ public class Products {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public Products(String productName, int price, int ID, String imgSource, int quantity) {

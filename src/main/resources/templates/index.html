@@ -455,7 +455,7 @@
             <th:block th:each="product, index :${Products}">
                 <ul>
                     <li class="product-spacing">
-                        <a th:for="${#ids.next('product')}" th:href="@{addproduct(id=${product.ID})}"><input type="button" value="Add">
+                        <form th:for="${#ids.next('product')}" th:action="@{/addproduct/{id}(id=${product.ID})}" method="post">
                             <select name="numberOfItems">
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -468,7 +468,8 @@
                                 <option value="9">9</option>
                                 <option value="10">10</option>
                             </select>
-                        </a>
+                            <input type="submit" value="Add">
+                        </form>
                     </li>
                 </ul>
             </th:block>

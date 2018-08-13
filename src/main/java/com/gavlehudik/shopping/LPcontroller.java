@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -42,13 +43,16 @@ public class LPcontroller {
         return "index";
         }
 
-        @GetMapping("/addproduct")
-        public String addProduct(@RequestParam String id, HttpServletRequest request) {
+        @PostMapping("/addproduct/{id}")
+        public String addProduct(@PathVariable String id, @RequestParam String numberOfItems, HttpServletRequest request) {
             HttpSession session = request.getSession(true);
             if (session.getAttribute("userID") != null) {
                 int userID = (int) session.getAttribute("userID");
                 int productId = Integer.parseInt(id);
-                LPrepository.addProduct(productId,userID);
+                int amount = Integer.parseInt(numberOfItems);
+                System.out.println(id);
+                System.out.println(amount);
+                LPrepository.addProduct(productId,userID, amount);
                 return "redirect:/";
             }
             return "redirect:/";
