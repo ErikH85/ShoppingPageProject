@@ -65,7 +65,6 @@ public class SHRepository {
                 ps3.setInt(1, newQuantity);
                 ps3.setInt(2, productID);
                 ps3.executeUpdate();
-                conn.close();
             }
             else{
                 ps = conn.prepareStatement("DELETE shoppingCart WHERE userID=? AND productID=? ");

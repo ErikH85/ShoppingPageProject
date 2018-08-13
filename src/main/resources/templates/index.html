@@ -9,6 +9,77 @@
 </head>
 <body>
 
+<div id="cartDiv" class="shoppingCartModal" th:if="${shoppingCart}">
+    <span onclick="document.getElementById('cartDiv').style.display='none'" class="close" title="Close Modal">&times;</span>
+<div class="modal-content">
+    <div class="container">
+        <h1>Shopping Cart</h1>
+        <p>Your items</p>
+
+        <div class="products">
+            <div class="product-item">
+                <h4>Product:</h4>
+                <ul>
+                    <li th:each="shoppingCart : ${shoppingCartInventory}" th:text="${shoppingCart.productName}">
+
+                    </li>
+                </ul>
+            </div>
+
+            <div class="product-item">
+                <h4>Price:</h4>
+                <ul>
+                    <li th:each="shoppingCart : ${shoppingCartInventory}" th:text="${shoppingCart.price} + ' SEK'">
+
+                    </li>
+                </ul>
+            </div>
+
+            <div class="product-item">
+                <h4>Quantity:</h4>
+                <ul>
+                    <li th:each="shoppingCart : ${shoppingCartInventory}" th:text="${shoppingCart.quantity}">
+
+                    </li>
+                </ul>
+            </div>
+
+            <div class="product-item">
+                <h4>Remove from Cart:</h4>
+                <th:block th:each="shoppingCart, index :${shoppingCartInventory}">
+                    <ul>
+                        <li>
+                            <form th:for="${#ids.next('shoppingCart')}" th:action="@{/removeProduct/{id}(id=${shoppingCart.productID})}" method="post">
+                                <select name="numberOfItems">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                                <input type="submit" value="Remove">
+                            </form>
+                        </li>
+                    </ul>
+                </th:block>
+            </div>
+        </div>
+
+        <div class="clearfix">
+            <form th:action="@{/buy}" method="get">
+                <button type="button" onclick="document.getElementById('cartDiv').style.display='none'" class="cancelbtn">Cancel</button>
+                <button type="submit" class="signupbtn">Continue</button>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
 <div class="topnav" id="myTopnav">
     <a href="/">Home</a>
     <span th:if="${LoggedIn}">
@@ -24,6 +95,7 @@
     <input type="text" placeholder="Search...">
 </div>
 
+<!--Register-->
 <div id="mySidenav" class="sidenav">
     <a id="games" href="/games">Games</a>
     <a id="consoles" href="/consoles">Consoles</a>
@@ -31,7 +103,7 @@
     <a href="phones" id="phones">Phones</a>
 </div>
 
-<!--Register-->
+<!--Login-->
 <div id="registerDiv" class="modal">
     <span onclick="document.getElementById('registerDiv').style.display='none'" class="close" title="Close Modal">&times;</span>
     <form class="modal-content" action="/register" method="post">
@@ -319,7 +391,7 @@
     </form>
 </div>
 
-<!--Login-->
+<!--Shopping Cart-->
 <div id="loginDiv" class="modal">
     <span onclick="document.getElementById('loginDiv').style.display='none'" class="close" title="Close Modal">&times;</span>
     <form class="modal-content" th:action="@{login}" method="post">
@@ -336,78 +408,6 @@
             <div class="clearfix">
                 <button type="button" onclick="document.getElementById('loginDiv').style.display='none'" class="cancelbtn">Cancel</button>
                 <button type="submit" class="signupbtn">Sign In</button>
-            </div>
-        </div>
-    </form>
-</div>
-
-<!--Shopping Cart-->
-<div id="cartDiv" class="shoppingCartModal" th:if="${shoppingCart}">
-    <span onclick="document.getElementById('cartDiv').style.display='none'" class="close" title="Close Modal">&times;</span>
-    <form class="modal-content" th:action="@{/buy}" method="get">
-
-        <div class="container">
-            <h1>Shopping Cart</h1>
-            <p>Your items</p>
-
-            <div class="products">
-            <div class="product-item">
-                <h4>Product:</h4>
-                <ul>
-                    <li th:each="shoppingCart : ${shoppingCartInventory}" th:text="${shoppingCart.productName}">
-
-                    </li>
-                </ul>
-            </div>
-
-            <div class="product-item">
-                <h4>Price:</h4>
-                <ul>
-                    <li th:each="shoppingCart : ${shoppingCartInventory}" th:text="${shoppingCart.price} + ' SEK'">
-
-                    </li>
-                </ul>
-            </div>
-
-            <div class="product-item">
-                <h4>Quantity:</h4>
-                <ul>
-                    <li th:each="shoppingCart : ${shoppingCartInventory}" th:text="${shoppingCart.quantity}">
-
-                    </li>
-                </ul>
-            </div>
-
-                <div class="product-item">
-                    <h4>Remove from Cart:</h4>
-                    <th:block th:each="shoppingCart, index :${shoppingCartInventory}">
-                        <ul>
-                            <li>
-                                <form th:for="${#ids.next('shoppingCart')}" th:action="@{/removeProduct/{id}(id=${shoppingCart.productID})}" method="post">
-                                    <select name="numberOfItems">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                    </select>
-                                    <input type="submit" value="Remove">
-                                </form>
-                            </li>
-                        </ul>
-                    </th:block>
-                </div>
-
-            </div>
-
-            <div class="clearfix">
-                <button type="button" onclick="document.getElementById('cartDiv').style.display='none'" class="cancelbtn">Cancel</button>
-                <button type="submit" class="signupbtn">Continue</button>
             </div>
         </div>
     </form>
