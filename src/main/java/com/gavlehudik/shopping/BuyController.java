@@ -33,6 +33,7 @@ public class BuyController {
             int id = (Integer)session.getAttribute("userID");
             addresses = buyRepository.getAddress(Integer.toString(id));
 
+
             return new ModelAndView("index").addObject("allAddresses", addresses);
         } else {
             return new ModelAndView("redirect:/");
