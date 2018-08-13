@@ -367,7 +367,7 @@
             <div class="product-item">
                 <h4>Price:</h4>
                 <ul>
-                    <li th:each="shoppingCart : ${shoppingCartInventory}" th:text="${shoppingCart.price}">
+                    <li th:each="shoppingCart : ${shoppingCartInventory}" th:text="${shoppingCart.price} + ' SEK'">
 
                     </li>
                 </ul>
@@ -451,7 +451,7 @@
             <th:block th:each="product, index :${Products}">
                 <ul>
                     <li class="product-spacing">
-                        <span th:for="${#ids.next('product')}" th:text="${product.price}"></span>
+                        <span th:for="${#ids.next('product')}" th:text="${product.price} + ' SEK'"></span>
                     </li>
                 </ul>
             </th:block>
@@ -554,7 +554,7 @@
     <div class="product-item">
         <h4>Price:</h4>
         <ul>
-            <li th:each="shoppingCart : ${shoppingCartInventory}" th:text="${shoppingCart.price}">
+            <li th:each="shoppingCart : ${shoppingCartInventory}" th:text="${shoppingCart.price} + ' SEK'">
 
             </li>
         </ul>
@@ -577,6 +577,10 @@
         <p th:text="${paymentOption}"></p>
 
     </div>
+
+    <form action="/confirm" method="post">
+        <input type="submit" value="Continue">
+    </form>
 
 </div>
 <script src="main.js"></script>
