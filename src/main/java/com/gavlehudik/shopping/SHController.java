@@ -3,6 +3,8 @@ package com.gavlehudik.shopping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -35,13 +37,14 @@ public class SHController {
         }
     }
 
-    @GetMapping("/removeProduct")
-    public String removeProduct(@RequestParam String id, HttpServletRequest request){
+    @PostMapping("/removeProduct/{id}")
+    public String removeProduct(@PathVariable String id, @RequestParam String numberOfItems, HttpServletRequest request) {
         HttpSession session = request.getSession(true);
-        if(session.getAttribute("userID") != null){
+        if (session.getAttribute("userID") != null) {
             int userID = (int) session.getAttribute("userID");
-            int productID = Integer.parseInt(id);
-            shRepository.removeProduct(userID, productID);
+            int productId = Integer.parseInt(id);
+            int amount = Integer.parseInt(numberOfItems);
+            shRepository.removeProduct(userID, productId, amount);
             return "redirect:/getShoppingCart";
         }
         return "redirect:/";

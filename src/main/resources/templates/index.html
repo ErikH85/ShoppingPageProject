@@ -384,11 +384,27 @@
 
                 <div class="product-item">
                     <h4>Remove from Cart:</h4>
-                    <ul>
-                        <li th:each="shoppingCart : ${shoppingCartInventory}">
-                            <a th:href="@{removeProduct(id=${shoppingCart.productID})}"><input type="button" value="Remove"></a>
-                        </li>
-                    </ul>
+                    <th:block th:each="shoppingCart, index :${shoppingCartInventory}">
+                        <ul>
+                            <li>
+                                <form th:for="${#ids.next('shoppingCart')}" th:action="@{/removeProduct/{id}(id=${shoppingCart.productID})}" method="post">
+                                    <select name="numberOfItems">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                    <input type="submit" value="Remove">
+                                </form>
+                            </li>
+                        </ul>
+                    </th:block>
                 </div>
 
             </div>

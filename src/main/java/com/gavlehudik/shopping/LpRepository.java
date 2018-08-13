@@ -30,6 +30,7 @@ public class LpRepository {
                 products.add(product);
             }
 
+            conn.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -51,6 +52,8 @@ public class LpRepository {
                 products.add(product);
             }
 
+            conn.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -71,6 +74,8 @@ public class LpRepository {
                 products.add(product);
             }
 
+            conn.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -90,6 +95,8 @@ public class LpRepository {
                         result.getString("imgSource"),result.getInt("quantity"));
                 products.add(product);
             }
+
+            conn.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -119,6 +126,8 @@ public class LpRepository {
             ps2.setInt(1, newQuantity);
             ps2.setInt(2, productID);
             ps2.executeUpdate();
+
+            conn.close();
 
         } catch (SQLException e) {
             e.printStackTrace();

@@ -50,8 +50,6 @@ public class LPcontroller {
                 int userID = (int) session.getAttribute("userID");
                 int productId = Integer.parseInt(id);
                 int amount = Integer.parseInt(numberOfItems);
-                System.out.println(id);
-                System.out.println(amount);
                 LPrepository.addProduct(productId,userID, amount);
                 return "redirect:/";
             }
